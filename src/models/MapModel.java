@@ -7,8 +7,8 @@ public class MapModel
 	
 	public MapModel(int width, int height)
 	{
-		this.width = width + 1;
-		this.height = height + 1;
+		this.width = width;
+		this.height = height;
 		setMap(createMap());
 	}
 
@@ -30,7 +30,7 @@ public class MapModel
 		{
 			for (int j = 0; j < getHeight(); j++)
 			{
-				if (i == 0 || j == 0 || i == getWidth() || j == getHeight())
+				if (i == 0 || j == 0 || i == getWidth() - 1 || j == getHeight() - 1)
 					newMap[i][j] = new CellModel(TerrainType.BORDER);
 				else
 					newMap[i][j] = new CellModel();

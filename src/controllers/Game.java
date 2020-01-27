@@ -100,10 +100,10 @@ public class Game
 		switch (input)
 		{
 		case PRESSED_DOWN:
-			character.move(0, -1);
+			character.move(0, 1);
 			break;
 		case PRESSED_UP:
-			character.move(0, 1);
+			character.move(0, -1);
 			break;
 		case PRESSED_LEFT:
 			character.move(-1, 0);

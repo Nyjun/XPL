@@ -20,13 +20,13 @@ public class MapView extends JPanel
 				if (i == sizeX/2 && j == sizeY/2)
 				{
 					characterView = charView;
-					map[i][j] = characterView;
+					map[j][i] = characterView;
 				}
 				else
 				{
-					map[i][j] = new CellView();
+					map[j][i] = new CellView();
 				}
-				super.add(map[i][j]);
+				super.add(map[j][i]);
 			}
 		}
 
