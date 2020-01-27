@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import models.CharacterModel;
 import views.CharacterView;
 
-public class Character
+public class CharacterController
 {
 	public enum Direction
 	{
@@ -18,8 +18,8 @@ public class Character
 	
 	private static int nbCharacter = 0;
 	private static int selectedCharacter = nbCharacter;
-	private static Hashtable<Integer, Character> characters = new Hashtable<Integer, Character>();
-	public static Character getSelectedCharacter()
+	private static Hashtable<Integer, CharacterController> characters = new Hashtable<Integer, CharacterController>();
+	public static CharacterController getSelectedCharacter()
 	{
 		if (characters.containsKey(selectedCharacter))
 		{
@@ -30,10 +30,10 @@ public class Character
 	}
 	
 	
-	public Character(CharacterModel model, CharacterView view)
+	public CharacterController(int posX, int posY, CharacterView view)
 	{
 		id = nbCharacter++;
-		setModel(model);
+		setModel(new CharacterModel(posX, posY, id));
 		setView(view);
 		
 		characters.put(id, this);

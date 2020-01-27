@@ -9,7 +9,10 @@ public class CharacterView extends CellView
 	public CharacterView()
 	{
 		super();
-		label.setBorder(new LineBorder(Color.BLACK, 2));
+		setBorder(new LineBorder(Color.BLACK, 2));
+		setCellContent(PLAYER_CHAR);
+		revalidate();
+		repaint();
 	}
 	
 	public char getCellContent()

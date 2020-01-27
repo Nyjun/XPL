@@ -1,11 +1,12 @@
 package models;
 
-import controllers.Character.Direction;
+import controllers.CharacterController.Direction;
 
 public class CharacterModel
 {
-	public CharacterModel(int x, int y)
+	public CharacterModel(int x, int y, int id)
 	{
+		this.id = id;
 		setX(x);
 		setY(y);
 		setEnergy(0);
@@ -15,6 +16,7 @@ public class CharacterModel
 	private int x;
 	private int y;
 	private Direction direction;
+	private final int id;
 	
 	public int getEnergy() {
 		return energy;

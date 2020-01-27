@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class MapView extends JPanel
 {
-	public MapView(int sizeX, int sizeY)
+	public MapView(int sizeX, int sizeY, CharacterView charView)
 	{
 		super();
 		setLayout(new GridLayout(sizeX, sizeY));
@@ -19,7 +19,8 @@ public class MapView extends JPanel
 			{
 				if (i == sizeX/2 && j == sizeY/2)
 				{
-					map[i][j] = new CharacterView();
+					characterView = charView;
+					map[i][j] = characterView;
 				}
 				else
 				{
@@ -34,6 +35,7 @@ public class MapView extends JPanel
 	private CellView[][] map;
 	private int viewWidth;
 	private int viewHeight;
+	private CharacterView characterView;
 	
 	public CellView getCell(int x, int y)
 	{
@@ -43,9 +45,9 @@ public class MapView extends JPanel
 	{
 		map[x][y] = cell;
 	}
-	public CharacterView getCharacter()
+	public CharacterView getCharacterView()
 	{
-		return (CharacterView)map[viewWidth/2][viewHeight/2];
+		return characterView;
 	}
 	
 	public void update()

@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.*;
@@ -12,12 +13,16 @@ public class CellView extends JPanel
 	public CellView()
 	{
 		super();
+		this.setLayout(new BorderLayout());
 		label = new JLabel();
+		label.setVerticalAlignment(JLabel.CENTER);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		this.add(label, BorderLayout.CENTER);
 
 		this.setOpaque(true);
+		selected = false;
 		setCellContent(' ');
 		setTerrain(TerrainType.VOID);
-		selected = false;
 	}
 	
 	protected JLabel label;
@@ -26,6 +31,8 @@ public class CellView extends JPanel
 	public void setCellContent(char c)
 	{
 		label.setText(Character.toString(c));
+		revalidate();
+		repaint();
 	}
 	public char getCellContent()
 	{
@@ -39,7 +46,7 @@ public class CellView extends JPanel
 	public void setTerrain(TerrainType terrain)
 	{
 		this.terrain = terrain;
-		label.setBackground(terrainToColor(terrain));
+		//label.setBackground(terrainToColor(terrain));
 		this.setBackground(terrainToColor(terrain));
 		
 	}
@@ -70,11 +77,11 @@ public class CellView extends JPanel
 		switch(terrain)
 		{
 			case GRASS:
-				return Color.GREEN;
+				return new Color(40, 125, 25);
 			case ROCK:
 				return Color.LIGHT_GRAY;
 			case WATER:
-				return Color.CYAN;
+				return Color.CYAN.darker();
 			case BORDER:
 				return Color.DARK_GRAY;
 			default:

@@ -30,10 +30,10 @@ public class Map
 			{
 				int x =  - mapView.getViewWidth() / 2 + i;
 				int y =  - mapView.getViewHeight() / 2 + j;
-				if (Character.getSelectedCharacter() != null)
+				if (CharacterController.getSelectedCharacter() != null)
 				{
-					x += Character.getSelectedCharacter().getX();
-					y += Character.getSelectedCharacter().getY();
+					x += CharacterController.getSelectedCharacter().getX();
+					y += CharacterController.getSelectedCharacter().getY();
 				}
 				else
 				{

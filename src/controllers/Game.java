@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Queue;
+
 import models.GameModel;
 import models.MapModel;
 import views.GameView;
@@ -7,12 +9,27 @@ import views.MapView;
 
 public class Game
 {
+	public enum Input
+	{
+		PRESSED_UP,
+		PRESSED_DOWN,
+		PRESSED_LEFT,
+		PRESSED_RIGHT,
+		RELEASED_UP,
+		RELEASED_DOWN,
+		RELEASED_LEFT,
+		RELEASED_RIGHT,
+		PRESSED_NULL,
+		RELEASED_NULL
+	}
+	
 	public Game(GameModel model, GameView view)
 	{
 		running = false;
 		gameModel = model;
 		gameView = view;
 		map = new Map(gameModel.getMap(), gameView.getMapView());
+		character = new CharacterController(map.getMapModel().getWidth()/2, map.getMapModel().getHeight()/2, gameView.getCharacterView());
 		
 		gameLoop = new Thread(
 			new Runnable()
@@ -52,9 +69,12 @@ public class Game
 	
 	private GameModel gameModel;
 	private GameView gameView;
+	
+	private CharacterController character;
 
 	private boolean running;
 	private Thread gameLoop;
+	private Queue<Input> inputQueue;
 	
 	public void stopGame()
 	{
