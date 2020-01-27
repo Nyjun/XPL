@@ -10,6 +10,8 @@ import views.MapView;
 
 public class Game
 {
+	private static final int SPAWN_RATE = 20;
+	
 	public enum Input
 	{
 		PRESSED_UP,

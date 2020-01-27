@@ -1,11 +1,11 @@
 package controllers;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import models.CharacterModel;
 import views.CharacterView;
 
-public class CharacterController
+public class CharacterController extends Entity
 {
 	public enum Direction
 	{
@@ -15,10 +15,9 @@ public class CharacterController
 		RIGHT
 	}
 	
-	
 	private static int nbCharacter = 0;
 	private static int selectedCharacter = nbCharacter;
-	private static Hashtable<Integer, CharacterController> characters = new Hashtable<Integer, CharacterController>();
+	private static HashMap<Integer, CharacterController> characters = new HashMap<Integer, CharacterController>();
 	public static CharacterController getSelectedCharacter()
 	{
 		if (characters.containsKey(selectedCharacter))
