@@ -4,7 +4,7 @@ public class GameModel
 {
 	public GameModel()
 	{
-		map = new MapModel(200, 200);
+		map = new MapModel(5, 5);
 	}
 	
 	private MapModel map;

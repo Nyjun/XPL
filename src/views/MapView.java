@@ -59,9 +59,7 @@ public class MapView extends JPanel
 				map[i][j].update();
 				//System.out.printf("[%d,%d] Color: %s Type: %s || ", i, j, map[i][j].getBackground().toString(), map[i][j].getTerrain().toString());
 			}
-			System.out.println();
 		}
-		System.out.println();
 	}
 
 	public int getViewWidth() {

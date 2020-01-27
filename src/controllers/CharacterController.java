@@ -43,6 +43,13 @@ public class CharacterController
 	private CharacterView view;
 	private final int id;
 	
+	public void move(int x, int y)
+	{
+		setX(getX() + x);
+		setY(getY() + y);
+		System.out.printf("[%d, %d]\n", getX(), getY());
+	}
+	
 	public int getX()
 	{
 		return model.getX();
