@@ -4,6 +4,7 @@ public abstract class EntityModel
 {
 	protected int x;
 	protected int y;
+	protected int entID;
 	public int getX() {
 		return x;
 	}

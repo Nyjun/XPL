@@ -3,21 +3,15 @@ package views;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-public class CharacterView extends CellView
+public class CharacterView extends EntityView
 {
 	public static final char PLAYER_CHAR = '@';
 	public CharacterView()
 	{
-		super();
-		setBorder(new LineBorder(Color.BLACK, 2));
-		setCellContent(PLAYER_CHAR);
+		super(PLAYER_CHAR, 0);
+		//setBorder(new LineBorder(Color.BLACK, 2));
 		revalidate();
 		repaint();
-	}
-	
-	public char getCellContent()
-	{
-		return PLAYER_CHAR;
 	}
 	
 	/**

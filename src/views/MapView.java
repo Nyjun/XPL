@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
@@ -19,8 +20,8 @@ public class MapView extends JPanel
 			{
 				if (i == sizeX/2 && j == sizeY/2)
 				{
-					characterView = charView;
-					map[j][i] = characterView;
+					characterCell = new CellView(Color.BLACK, 2);
+					map[j][i] = characterCell;
 				}
 				else
 				{
@@ -35,7 +36,7 @@ public class MapView extends JPanel
 	private CellView[][] map;
 	private int viewWidth;
 	private int viewHeight;
-	private CharacterView characterView;
+	private CellView characterCell;
 	
 	public CellView getCell(int x, int y)
 	{
@@ -45,10 +46,10 @@ public class MapView extends JPanel
 	{
 		map[x][y] = cell;
 	}
-	public CharacterView getCharacterView()
-	{
-		return characterView;
-	}
+//	public CharacterView getCharacterView()
+//	{
+//		return characterView;
+//	}
 	
 	public void update()
 	{

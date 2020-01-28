@@ -2,11 +2,12 @@ package models;
 
 import controllers.CharacterController.Direction;
 
-public class CharacterModel
+public class CharacterModel extends EntityModel
 {
 	public CharacterModel(int x, int y, int id)
 	{
-		this.id = id;
+		//super(x, y);
+		this.charID = id;
 		setX(x);
 		setY(y);
 		setEnergy(0);
@@ -16,7 +17,7 @@ public class CharacterModel
 	private int x;
 	private int y;
 	private Direction direction;
-	private final int id;
+	private final int charID;
 	
 	public int getEnergy() {
 		return energy;

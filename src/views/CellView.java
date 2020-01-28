@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,29 +15,32 @@ public class CellView extends JPanel
 	{
 		super();
 		this.setLayout(new BorderLayout());
-		label = new JLabel();
-		label.setVerticalAlignment(JLabel.CENTER);
-		label.setHorizontalAlignment(JLabel.CENTER);
-		this.add(label, BorderLayout.CENTER);
+		content = new ArrayList<EntityView>();
 
 		this.setOpaque(true);
 		selected = false;
-		setCellContent(' ');
 		setTerrain(TerrainType.VOID);
 	}
+	public CellView(Color border, int thickness)
+	{
+		this();
+		setBorder(new LineBorder(border, thickness));
+	}
 	
-	protected JLabel label;
+	protected ArrayList<EntityView> content;
+	protected EntityView displayedEntity;
 	private boolean selected;
 	protected TerrainType terrain;
-	public void setCellContent(char c)
+	public void addEntity(EntityView entity)
 	{
-		label.setText(Character.toString(c));
-		revalidate();
-		repaint();
+		content.add(entity);
+		if (entity.getPriority() >= displayedEntity.getPriority())
+			updateDisplayedEntity();
 	}
-	public char getCellContent()
+	public void removeEntity(EntityView entity)
 	{
-		return label.getText().charAt(0);
+		content.remove(entity);
+		updateDisplayedEntity();
 	}
 
 	public TerrainType getTerrain()
@@ -61,10 +65,23 @@ public class CellView extends JPanel
 	public void toggleSelected()
 	{
 		if (selected)
-			label.setBorder(null);
+			setBorder(null);
 		else
-			label.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+			setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		selected = !selected;
+	}
+	public void updateDisplayedEntity()
+	{
+		EntityView ev = getMaxPriorityEntity();
+		if (ev == null)
+		{
+			remove(displayedEntity);
+		}
+		else if(ev != displayedEntity)
+		{
+			remove(displayedEntity);
+			add(ev);
+		}
 	}
 	public void update()
 	{
@@ -87,6 +104,18 @@ public class CellView extends JPanel
 			default:
 				return Color.BLACK;
 		}
+	}
+	private EntityView getMaxPriorityEntity()
+	{
+		if (content.size() == 0)
+			return null;
+		EntityView max = content.get(0);
+		for (EntityView ev : content)
+		{
+			if (max.getPriority() <= ev.getPriority())
+				max = ev;
+		}
+		return max;
 	}
 	
 	/**
