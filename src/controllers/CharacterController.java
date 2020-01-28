@@ -30,12 +30,10 @@ public class CharacterController extends Entity
 	}
 	
 	
-	public CharacterController(int posX, int posY, CharacterView view)
+	public CharacterController(CharacterView view)
 	{
 		super(view);
 		charID = getModel().getCharID();
-		setX(posX);
-		setY(posY);
 		setView(view);
 		
 		characters.put(charID, this);
@@ -50,12 +48,12 @@ public class CharacterController extends Entity
 	//private CharacterView view;
 	private final int charID;
 	
-	public void move(int x, int y)
-	{
-		setX(getX() + x);
-		setY(getY() + y);
-		System.out.printf("[%d, %d]\n", getX(), getY());
-	}
+//	public void move(int x, int y)
+//	{
+//		setX(getX() + x);
+//		setY(getY() + y);
+//		System.out.printf("[%d, %d]\n", getX(), getY());
+//	}
 	
 	
 	public CharacterModel getModel() {

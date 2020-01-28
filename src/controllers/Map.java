@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+
+import models.CellModel;
+import models.EntityModel;
 import models.MapModel;
 import views.MapView;
 
@@ -21,6 +25,30 @@ public class Map
 	
 	private MapModel mapModel;
 	private MapView mapView;
+	
+	public void addEntity(Entity ent, int x, int y)
+	{
+		if (x >= 0 && x < mapModel.getWidth() && y >= 0 && y < mapModel.getHeight())
+		{
+			mapModel.getCell(x, y).addEntity(ent.getModel());
+			ent.setX(x);
+			ent.setY(y);
+		}
+	}
+	public void moveEntity(Entity ent, int x, int y)
+	{
+		if (mapModel.getCell(ent.getX(), ent.getY()).getContent().contains(ent.getModel()))
+		{
+			
+			if (ent.getX() + x >= 0 && ent.getX() + x < mapModel.getWidth() && ent.getY() + y >= 0 && ent.getY() + y < mapModel.getHeight())
+			{
+				mapModel.getCell(ent.getX(), ent.getY()).removeEntity(ent.getModel());
+				mapModel.getCell(ent.getX() + x, ent.getY() + y).addEntity(ent.getModel());
+				ent.setX(ent.getX() + x);
+				ent.setY(ent.getY() + y);
+			}
+		}
+	}
 	
 	public void updateView()
 	{
@@ -47,12 +75,27 @@ public class Map
 				else
 				{
 					mapView.getCell(i, j).setTerrain(mapModel.getCell(x, y).getTerrain());
+					mapView.getCell(i, j).setContent(getCellContent(mapModel.getCell(x, y)));
 				}
 			}
 		}
 		mapView.update();
 	}
 	
+	private ArrayList<Entity> getCellContent(CellModel cell)
+	{
+		ArrayList<Entity> cellContent = new ArrayList<Entity>();
+		for(EntityModel ent : cell.getContent())
+		{
+			Entity e = Entity.getEntity(ent.getID());
+			if (e != null)
+			{
+				cellContent.add(e);
+				//System.out.println("Entity" + ent.getID());
+			}
+		}
+		return cellContent;
+	}
 	
 	public MapModel getMapModel() {
 		return mapModel;

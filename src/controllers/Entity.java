@@ -8,18 +8,25 @@ import views.EntityView;
 public abstract class Entity
 {
 	private static long nbEntity = 0;
-	private static HashMap<Integer, Entity> entities = new HashMap<Integer, Entity>();
+	private static HashMap<Long, Entity> entities = new HashMap<Long, Entity>();
+	public static Entity getEntity(long ID)
+	{
+		return entities.get(ID);
+	}
 	
 	public Entity(EntityView view)
 	{
 		ID = nbEntity++;
 		setModel(createModel(ID));
 		setView(view);
+		entities.put(ID, this);
 	}
 	
 	private final long ID;
 	private EntityModel model;
 	private EntityView view;
+	private int visualPriority = 0;		//TODO: handling priorities
+	private int logicalPriority = 0;
 	
 	protected abstract EntityModel createModel(long ID);
 	
@@ -53,5 +60,21 @@ public abstract class Entity
 	}
 	public long getID() {
 		return ID;
+	}
+
+	public int getVisualPriority() {
+		return visualPriority;
+	}
+
+	public void setVisualPriority(int visualPriority) {
+		this.visualPriority = visualPriority;
+	}
+
+	public int getLogicalPriority() {
+		return logicalPriority;
+	}
+
+	public void setLogicalPriority(int logicalPriority) {
+		this.logicalPriority = logicalPriority;
 	}
 }

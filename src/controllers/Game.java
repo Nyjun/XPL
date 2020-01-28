@@ -34,7 +34,9 @@ public class Game
 		gameView = view;
 		gameView.init(this);
 		map = new Map(gameModel.getMap(), gameView.getMapView());
-		character = new CharacterController(map.getMapModel().getWidth()/2, map.getMapModel().getHeight()/2, gameView.getCharacterView());
+		character = new CharacterController(gameView.getCharacterView());
+		map.addEntity(character, 	map.getMapModel().getWidth()/2,
+									map.getMapModel().getHeight()/2);
 		
 		gameLoop = new Thread(
 			new Runnable()
@@ -102,21 +104,33 @@ public class Game
 		switch (input)
 		{
 		case PRESSED_DOWN:
-			character.move(0, 1);
+			moveEntity(character, 0, 1);
 			break;
 		case PRESSED_UP:
-			character.move(0, -1);
+			moveEntity(character, 0, -1);
 			break;
 		case PRESSED_LEFT:
-			character.move(-1, 0);
+			moveEntity(character, -1, 0);
 			break;
 		case PRESSED_RIGHT:
-			character.move(1, 0);
+			moveEntity(character, 1, 0);
 			break;
 		default:
 			break;
 		}
 	}
+	
+	/// ACTIONS ///
+	public void moveEntity(Entity ent, int x, int y)
+	{
+		map.moveEntity(ent, x, y);
+	}
+	
+	public void generateEnergy()
+	{
+		
+	}
+	
 	
 	public void stopGame()
 	{

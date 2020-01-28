@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import controllers.Entity;
 import controllers.Map.TerrainType;
 
 public class CellView extends JPanel
@@ -27,22 +28,21 @@ public class CellView extends JPanel
 		setBorder(new LineBorder(border, thickness));
 	}
 	
-	protected ArrayList<EntityView> content;
-	protected EntityView displayedEntity;
+	private ArrayList<EntityView> content;
+	private EntityView displayedEntity;
 	private boolean selected;
-	protected TerrainType terrain;
-	public void addEntity(EntityView entity)
+	private TerrainType terrain;
+
+	public ArrayList<EntityView> getContent()
 	{
-		content.add(entity);
-		if (entity.getPriority() >= displayedEntity.getPriority())
-			updateDisplayedEntity();
+		return content;
 	}
-	public void removeEntity(EntityView entity)
+	public void setContent(ArrayList<Entity> entities)
 	{
-		content.remove(entity);
+		this.content = entityToView(entities);
 		updateDisplayedEntity();
 	}
-
+	
 	public TerrainType getTerrain()
 	{
 		return terrain;
@@ -70,16 +70,18 @@ public class CellView extends JPanel
 			setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 		selected = !selected;
 	}
-	public void updateDisplayedEntity()
+	private void updateDisplayedEntity()
 	{
 		EntityView ev = getMaxPriorityEntity();
 		if (ev == null)
 		{
-			remove(displayedEntity);
+			if (displayedEntity != null)
+				remove(displayedEntity);
 		}
 		else if(ev != displayedEntity)
 		{
-			remove(displayedEntity);
+			if (displayedEntity != null)
+				remove(displayedEntity);
 			add(ev);
 		}
 	}
@@ -89,6 +91,21 @@ public class CellView extends JPanel
 		repaint();
 	}
 	
+	
+	private EntityView getMaxPriorityEntity()
+	{
+		if (content.size() == 0)
+			return null;
+		EntityView max = content.get(0);
+		for (EntityView ev : content)
+		{
+			if (max.getPriority() <= ev.getPriority())
+				max = ev;
+		}
+		return max;
+	}
+	
+	/// CONVERTERS ///
 	private Color terrainToColor(TerrainType terrain)
 	{
 		switch(terrain)
@@ -105,21 +122,20 @@ public class CellView extends JPanel
 				return Color.BLACK;
 		}
 	}
-	private EntityView getMaxPriorityEntity()
+	private ArrayList<EntityView> entityToView(ArrayList<Entity> entities)
 	{
-		if (content.size() == 0)
-			return null;
-		EntityView max = content.get(0);
-		for (EntityView ev : content)
+		ArrayList<EntityView> newContent = new ArrayList<EntityView>();
+		for(Entity ent : entities)
 		{
-			if (max.getPriority() <= ev.getPriority())
-				max = ev;
+			newContent.add(ent.getView());
 		}
-		return max;
+		return newContent;
 	}
+	
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 }

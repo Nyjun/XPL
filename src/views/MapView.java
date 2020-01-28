@@ -38,6 +38,7 @@ public class MapView extends JPanel
 	private int viewHeight;
 	private CellView characterCell;
 	
+	
 	public CellView getCell(int x, int y)
 	{
 		return map[x][y];

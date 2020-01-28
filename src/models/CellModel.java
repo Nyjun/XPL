@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 import controllers.Map.TerrainType;
 
 public class CellModel
@@ -12,6 +14,7 @@ public class CellModel
 	}
 	public CellModel(TerrainType terrain)
 	{
+		this.content = new ArrayList<EntityModel>();
 		this.terrain = terrain;
 	}
 	
@@ -25,13 +28,25 @@ public class CellModel
 		this.terrain = terrain;
 	}
 	
-	private EntityModel content;
-	public EntityModel getContent()
+	public void addEntity(EntityModel entity)
+	{
+		if (!content.contains(entity))
+		{
+			content.add(entity);
+		}
+	}
+	public void removeEntity(EntityModel entity)
+	{
+		content.remove(entity);
+	}
+	
+	private ArrayList<EntityModel> content;
+	public ArrayList<EntityModel> getContent()
 	{
 		return content;
 	}
-	public void setContent(EntityModel entity)
+	public void setContent(ArrayList<EntityModel> content)
 	{
-		this.content = entity;
+		this.content = content;
 	}
 }
