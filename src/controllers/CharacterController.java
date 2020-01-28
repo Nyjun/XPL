@@ -3,6 +3,7 @@ package controllers;
 import java.util.HashMap;
 
 import models.CharacterModel;
+import models.EntityModel;
 import views.CharacterView;
 
 public class CharacterController extends Entity
@@ -31,16 +32,23 @@ public class CharacterController extends Entity
 	
 	public CharacterController(int posX, int posY, CharacterView view)
 	{
-		id = nbCharacter++;
-		setModel(new CharacterModel(posX, posY, id));
+		super(view);
+		charID = getModel().getCharID();
+		setX(posX);
+		setY(posY);
 		setView(view);
 		
-		characters.put(id, this);
+		characters.put(charID, this);
+	}
+	@Override
+	protected EntityModel createModel(long ID)
+	{
+		return new CharacterModel(ID, nbCharacter++);
 	}
 	
-	private CharacterModel model;
-	private CharacterView view;
-	private final int id;
+	//private CharacterModel model;
+	//private CharacterView view;
+	private final int charID;
 	
 	public void move(int x, int y)
 	{
@@ -49,33 +57,19 @@ public class CharacterController extends Entity
 		System.out.printf("[%d, %d]\n", getX(), getY());
 	}
 	
-	public int getX()
-	{
-		return model.getX();
-	}
-	public void setX(int x)
-	{
-		model.setX(x);
-	}
-	public int getY()
-	{
-		return model.getY();
-	}
-	public void setY(int y)
-	{
-		model.setY(y);
-	}
 	
 	public CharacterModel getModel() {
-		return model;
+		return (CharacterModel)super.getModel();
 	}
 	public void setModel(CharacterModel model) {
-		this.model = model;
+		super.setModel(model);
 	}
 	public CharacterView getView() {
-		return view;
+		return (CharacterView)super.getView();
 	}
 	public void setView(CharacterView view) {
-		this.view = view;
+		super.setView(view);;
 	}
+
+
 }

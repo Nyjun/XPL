@@ -4,18 +4,14 @@ import controllers.CharacterController.Direction;
 
 public class CharacterModel extends EntityModel
 {
-	public CharacterModel(int x, int y, int id)
+	public CharacterModel(long ID, int charID)
 	{
-		//super(x, y);
-		this.charID = id;
-		setX(x);
-		setY(y);
+		super(ID);
+		this.charID = charID;
 		setEnergy(0);
 		setDirection(Direction.UP);
 	}
 	private int energy;
-	private int x;
-	private int y;
 	private Direction direction;
 	private final int charID;
 	
@@ -25,23 +21,14 @@ public class CharacterModel extends EntityModel
 	public void setEnergy(int energy) {
 		this.energy = energy;
 	}
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 	public Direction getDirection() {
 		return direction;
 	}
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+	public int getCharID() {
+		return charID;
 	}
 	
 }
