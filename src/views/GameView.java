@@ -102,6 +102,9 @@ public class GameView extends JFrame implements KeyListener
     	case KeyEvent.VK_RIGHT:
     		//System.out.println("RIGHT");
     		return pressed ? Input.PRESSED_RIGHT : Input.RELEASED_RIGHT;
+    	case KeyEvent.VK_SPACE:
+    		//System.out.println("RIGHT");
+    		return pressed ? Input.PRESSED_SPACE : Input.RELEASED_SPACE;
     	default:
     		return pressed ? Input.PRESSED_NULL : Input.RELEASED_NULL;
     	}

@@ -4,6 +4,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import controllers.Map.TerrainType;
 import models.GameModel;
 import models.MapModel;
 import views.GameView;
@@ -24,8 +25,10 @@ public class Game
 		RELEASED_DOWN,
 		RELEASED_LEFT,
 		RELEASED_RIGHT,
+		PRESSED_SPACE,
+		RELEASED_SPACE,
 		PRESSED_NULL,
-		RELEASED_NULL
+		RELEASED_NULL,
 	}
 	
 	public Game(GameModel model, GameView view)
@@ -120,6 +123,8 @@ public class Game
 		case PRESSED_RIGHT:
 			moveEntity(character, 1, 0);
 			break;
+		case RELEASED_SPACE:
+			changeTerrain(TerrainType.WATER, character.getX(), character.getY());
 		default:
 			break;
 		}
@@ -135,6 +140,15 @@ public class Game
 	{
 		Resource resource = new Resource(new ResourceView());
 		map.addEntity(resource, x, y);
+	}
+	
+	public void changeTerrain(TerrainType terrain, int x, int y)
+	{
+		if (character.getModel().getEnergy() > 0)
+		{
+			map.getMapModel().getCell(x, y).setTerrain(terrain);
+			character.getModel().changeEnergy(-1);
+		}
 	}
 	
 	
