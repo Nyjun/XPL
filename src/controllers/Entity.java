@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.HashMap;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import models.CellModel;
 import models.EntityModel;
@@ -10,13 +12,27 @@ public abstract class Entity
 {
 	private static long nbEntity = 0;
 	private static HashMap<Long, Entity> entities = new HashMap<Long, Entity>();
+	private static Queue<Entity> destroyedEntities = new ConcurrentLinkedQueue<Entity>();
+	public static void destroy(Entity entity)
+	{
+		destroyedEntities.add(entity);
+	}
 	public static Entity getEntity(long ID)
 	{
 		return entities.get(ID);
 	}
-	public static void update()
+	public static void updateEntities()
 	{
-		
+		for (Entity ent : entities.values())
+		{
+			ent.update();
+		}
+		while (destroyedEntities.peek() != null)
+		{
+			Entity ent = destroyedEntities.remove();
+			ent.getCurrentCell().removeEntity(ent.getModel());
+			entities.remove(ent.getID());
+		}
 	}
 	
 	public Entity(EntityView view)
@@ -35,7 +51,7 @@ public abstract class Entity
 	private CellModel currentCell;
 	
 	protected abstract EntityModel createModel(long ID);
-	
+	protected abstract void update();
 
 	public CellModel getCurrentCell() {
 		return currentCell;

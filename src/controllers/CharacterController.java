@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.HashMap;
-
 import models.CharacterModel;
 import models.EntityModel;
 import views.CharacterView;
@@ -16,45 +14,37 @@ public class CharacterController extends Entity
 		RIGHT
 	}
 	
-	private static int nbCharacter = 0;
-	private static int selectedCharacter = nbCharacter;
-	private static HashMap<Integer, CharacterController> characters = new HashMap<Integer, CharacterController>();
+	private static long selectedCharacter = 0;
 	public static CharacterController getSelectedCharacter()
 	{
-		if (characters.containsKey(selectedCharacter))
-		{
-			return characters.get(selectedCharacter);
-		}
-		else
-			return null;
+		return (CharacterController)Entity.getEntity(selectedCharacter);
 	}
-	
 	
 	public CharacterController(CharacterView view)
 	{
 		super(view);
-		charID = getModel().getCharID();
 		setView(view);
-		
-		characters.put(charID, this);
 	}
 	@Override
 	protected EntityModel createModel(long ID)
 	{
-		return new CharacterModel(ID, nbCharacter++);
+		return new CharacterModel(ID);
 	}
 	
-	//private CharacterModel model;
-	//private CharacterView view;
-	private final int charID;
-	
-//	public void move(int x, int y)
-//	{
-//		setX(getX() + x);
-//		setY(getY() + y);
-//		System.out.printf("[%d, %d]\n", getX(), getY());
-//	}
-	
+	@Override
+	protected void update()
+	{
+		for (EntityModel em : this.getCurrentCell().getContent())
+		{
+			Entity ent = getEntity(em.getID());
+			if (ent instanceof Resource)
+			{
+				this.getModel().changeEnergy(1);
+				Entity.destroy(ent);
+				System.out.println(getModel().getEnergy());
+			}
+		}
+	}
 	
 	public CharacterModel getModel() {
 		return (CharacterModel)super.getModel();
@@ -68,6 +58,4 @@ public class CharacterController extends Entity
 	public void setView(CharacterView view) {
 		super.setView(view);;
 	}
-
-
 }

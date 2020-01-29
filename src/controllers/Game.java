@@ -60,6 +60,7 @@ public class Game
 							}
 							
 							generateResources(25);
+							Entity.updateEntities();
 							
 							map.updateView();
 							//System.out.println("Update...");
@@ -109,19 +110,15 @@ public class Game
 		{
 		case PRESSED_DOWN:
 			moveEntity(character, 0, 1);
-			System.out.println(character.getY());
 			break;
 		case PRESSED_UP:
 			moveEntity(character, 0, -1);
-			System.out.println(character.getY());
 			break;
 		case PRESSED_LEFT:
 			moveEntity(character, -1, 0);
-			System.out.println(character.getX());
 			break;
 		case PRESSED_RIGHT:
 			moveEntity(character, 1, 0);
-			System.out.println(character.getX());
 			break;
 		default:
 			break;

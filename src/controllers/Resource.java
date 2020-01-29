@@ -15,5 +15,9 @@ public class Resource extends Entity
 	{
 		return new ResourceModel(ID);
 	}
-
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
