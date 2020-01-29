@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.HashMap;
 
+import models.CellModel;
 import models.EntityModel;
 import views.EntityView;
 
@@ -12,6 +13,10 @@ public abstract class Entity
 	public static Entity getEntity(long ID)
 	{
 		return entities.get(ID);
+	}
+	public static void update()
+	{
+		
 	}
 	
 	public Entity(EntityView view)
@@ -27,14 +32,25 @@ public abstract class Entity
 	private EntityView view;
 	private int visualPriority = 0;		//TODO: handling priorities
 	private int logicalPriority = 0;
+	private CellModel currentCell;
 	
 	protected abstract EntityModel createModel(long ID);
 	
+
+	public CellModel getCurrentCell() {
+		return currentCell;
+	}
+	public void setCell(CellModel currentCell)
+	{
+		this.currentCell = currentCell;
+		setX(currentCell.getX());
+		setY(currentCell.getY());
+	}
 	public int getX()
 	{
 		return model.getX();
 	}
-	public void setX(int x)
+	private void setX(int x)
 	{
 		model.setX(x);
 	}
@@ -42,7 +58,7 @@ public abstract class Entity
 	{
 		return model.getY();
 	}
-	public void setY(int y)
+	private void setY(int y)
 	{
 		model.setY(y);
 	}

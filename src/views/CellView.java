@@ -40,7 +40,10 @@ public class CellView extends JPanel
 	public void setContent(ArrayList<Entity> entities)
 	{
 		this.content = entityToView(entities);
-		updateDisplayedEntity();
+		this.removeAll();
+		EntityView ev = getMaxPriorityEntity();
+		if (ev != null)
+			this.add(ev);
 	}
 	
 	public TerrainType getTerrain()

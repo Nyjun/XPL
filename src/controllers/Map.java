@@ -31,8 +31,7 @@ public class Map
 		if (x >= 0 && x < mapModel.getWidth() && y >= 0 && y < mapModel.getHeight())
 		{
 			mapModel.getCell(x, y).addEntity(ent.getModel());
-			ent.setX(x);
-			ent.setY(y);
+			ent.setCell(mapModel.getCell(x, y));
 		}
 	}
 	public void moveEntity(Entity ent, int x, int y)
@@ -44,9 +43,15 @@ public class Map
 			{
 				mapModel.getCell(ent.getX(), ent.getY()).removeEntity(ent.getModel());
 				mapModel.getCell(ent.getX() + x, ent.getY() + y).addEntity(ent.getModel());
-				ent.setX(ent.getX() + x);
-				ent.setY(ent.getY() + y);
+				ent.setCell(mapModel.getCell(ent.getX() + x, ent.getY() + y));
 			}
+		}
+	}
+	public void removeEntity(Entity ent)
+	{
+		if (mapModel.getCell(ent.getX(), ent.getY()).getContent().contains(ent.getModel()))
+		{
+			mapModel.getCell(ent.getX(), ent.getY()).removeEntity(ent.getModel());
 		}
 	}
 	
@@ -71,7 +76,10 @@ public class Map
 					y += 1;
 				}
 				if (x < 0 || x >= mapModel.getWidth() || y < 0 || y >= mapModel.getHeight())
+				{
 					mapView.getCell(i, j).setTerrain(TerrainType.VOID);
+					mapView.getCell(i, j).setContent(new ArrayList<Entity>());
+				}
 				else
 				{
 					mapView.getCell(i, j).setTerrain(mapModel.getCell(x, y).getTerrain());

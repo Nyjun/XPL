@@ -12,7 +12,7 @@ import controllers.Game;
 import controllers.Game.Input;
 
 
-public class GameView extends JFrame
+public class GameView extends JFrame implements KeyListener
 {
 	public static final int CAMERA_SIZE_X = 15; //Must be >= 3
 	public static final int CAMERA_SIZE_Y = 15; //Must be >= 3
@@ -49,21 +49,7 @@ public class GameView extends JFrame
 		this.setVisible(true);
 		//System.out.println(((JButton)mapPanel.getComponent(6)).getText());
 		
-		this.addKeyListener(new KeyListener()
-		{
-			@Override
-			public void keyTyped(KeyEvent e) { }
-			@Override
-			public void keyReleased(KeyEvent e)
-			{
-				game.addInput(keyEventToInput(e, false));
-			}
-			@Override
-			public void keyPressed(KeyEvent e)
-			{
-				game.addInput(keyEventToInput(e, true));
-			}
-		});
+		this.addKeyListener(this);
 		
 	}
 	public void init(Game game)
@@ -85,6 +71,19 @@ public class GameView extends JFrame
 		mapView.update();
 		this.revalidate();
 		this.repaint();
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) { }
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		game.addInput(keyEventToInput(e, false));
+	}
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		game.addInput(keyEventToInput(e, true));
 	}
 
     private Input keyEventToInput(KeyEvent e, boolean pressed)

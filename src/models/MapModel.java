@@ -31,9 +31,9 @@ public class MapModel
 			for (int j = 0; j < getHeight(); j++)
 			{
 				if (i == 0 || j == 0 || i == getWidth() - 1 || j == getHeight() - 1)
-					newMap[i][j] = new CellModel(TerrainType.BORDER);
+					newMap[i][j] = new CellModel(i, j, TerrainType.BORDER);
 				else
-					newMap[i][j] = new CellModel();
+					newMap[i][j] = new CellModel(i, j);
 			}
 		}
 		return newMap;

@@ -1,12 +1,14 @@
 package controllers;
 
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import models.GameModel;
 import models.MapModel;
 import views.GameView;
 import views.MapView;
+import views.ResourceView;
 
 public class Game
 {
@@ -57,6 +59,8 @@ public class Game
 								handleInput(inputQueue.remove());
 							}
 							
+							generateResources(25);
+							
 							map.updateView();
 							//System.out.println("Update...");
 						    Thread.sleep(100 - millis % 100);
@@ -105,15 +109,19 @@ public class Game
 		{
 		case PRESSED_DOWN:
 			moveEntity(character, 0, 1);
+			System.out.println(character.getY());
 			break;
 		case PRESSED_UP:
 			moveEntity(character, 0, -1);
+			System.out.println(character.getY());
 			break;
 		case PRESSED_LEFT:
 			moveEntity(character, -1, 0);
+			System.out.println(character.getX());
 			break;
 		case PRESSED_RIGHT:
 			moveEntity(character, 1, 0);
+			System.out.println(character.getX());
 			break;
 		default:
 			break;
@@ -125,15 +133,42 @@ public class Game
 	{
 		map.moveEntity(ent, x, y);
 	}
-	
-	public void generateEnergy()
+
+	public void spawnResource(int x, int y)
 	{
-		
+		Resource resource = new Resource(new ResourceView());
+		map.addEntity(resource, x, y);
 	}
 	
+	
+	/// GAME MECHANICS ///
+	public void generateResources(int period)
+	{
+		if (resourceSpawnTimer++ > period)
+		{
+			Resource resource = new Resource(new ResourceView());
+			spawnResource(getRandomNumberInRange(0, map.getMapModel().getWidth()),
+					getRandomNumberInRange(0, map.getMapModel().getHeight()));
+			resourceSpawnTimer = 0;
+		}
+	}
+	private int resourceSpawnTimer = 0;
 	
 	public void stopGame()
 	{
 		running = false;
+	}
+	
+	/// AUXILIARIES ///
+	///Ref:https://mkyong.com/java/java-generate-random-integers-in-a-range/
+	private static int getRandomNumberInRange(int min, int max)
+	{
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
 	}
 }

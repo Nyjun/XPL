@@ -8,17 +8,22 @@ public class CellModel
 {
 	private static final TerrainType DEFAULT = TerrainType.GRASS;
 	
-	public CellModel()
+	public CellModel(int x, int y)
 	{
-		this(DEFAULT);
+		this(x, y, DEFAULT);
 	}
-	public CellModel(TerrainType terrain)
+	public CellModel(int x, int y, TerrainType terrain)
 	{
 		this.content = new ArrayList<EntityModel>();
 		this.terrain = terrain;
+		setX(x);
+		setY(y);
 	}
 	
 	private TerrainType terrain;
+	private int x;
+	private int y;
+	
 	public TerrainType getTerrain()
 	{
 		return terrain;
@@ -48,5 +53,17 @@ public class CellModel
 	public void setContent(ArrayList<EntityModel> content)
 	{
 		this.content = content;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
 	}
 }
